@@ -12,6 +12,15 @@ type Data struct {
 	Distance int
 }
 
+/*
+Read()
+s: serial port were the direct data from the audrino comes in
+c: channel to output the correct data
+
+it looks at the current and the last byte wat to do with the
+data and were to store it and when its ready
+
+*/
 func Read(s *serial.Port, c chan Data) {
 	last := byte(0)
 	angle := 0
