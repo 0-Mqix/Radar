@@ -1,7 +1,6 @@
 package radar
 
 import (
-	"log"
 	"strconv"
 
 	"github.com/tarm/serial"
@@ -19,9 +18,8 @@ c: channel to output the correct data
 
 it looks at the current and the last byte wat to do with the
 data and were to store it and when its ready
-
 */
-func Read(s *serial.Port, c chan Data) {
+func Read(s *serial.Port, c chan Data, name string) {
 	last := byte(0)
 	angle := 0
 	distance := 0
@@ -32,7 +30,8 @@ func Read(s *serial.Port, c chan Data) {
 		buf := make([]byte, 1)
 		_, err := s.Read(buf)
 		if err != nil {
-			log.Fatal(err)
+			newSerial := Reconnect(name)
+			s = &newSerial
 		}
 
 		char := buf[0]
